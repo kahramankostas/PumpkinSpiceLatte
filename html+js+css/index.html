@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT Sahne Bulucu</title>
+    <!-- Modern Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- SheetJS for Excel parsing -->
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1>SRT Sahne Bulucu</h1>
+            <p>Altyazı dosyalarında arama yapın ve ilgili sahneyi anında açın.</p>
+        </header>
+
+        <section class="config-section">
+            <div class="card config-card">
+                <h2>1. Dosya Seçimi</h2>
+                <p class="config-desc">Lütfen <code>srts</code> klasörünü ve <code>bolumler.xlsx</code> dosyasını seçin.</p>
+                
+                <div class="input-group">
+                    <label class="file-label">
+                        <span class="step-num">A</span>
+                        <div class="file-info">
+                            <span class="label-text">SRT Klasörü (Altyazılar)</span>
+                            <span id="srt-status" class="status-badge waiting">Seçilmedi</span>
+                        </div>
+                        <input type="file" id="srt-input" webkitdirectory directory multiple />
+                        <button class="btn secondary" onclick="document.getElementById('srt-input').click()">Klasör Seç</button>
+                    </label>
+                </div>
+
+                <div class="input-group">
+                    <label class="file-label">
+                        <span class="step-num">B</span>
+                        <div class="file-info">
+                            <span class="label-text">Excel Dosyası (Bölümler)</span>
+                            <span id="excel-status" class="status-badge waiting">Seçilmedi</span>
+                        </div>
+                        <input type="file" id="excel-input" accept=".xlsx, .xls" />
+                        <button class="btn secondary" onclick="document.getElementById('excel-input').click()">Dosya Seç</button>
+                    </label>
+                </div>
+                
+                <div id="loading-indicator" class="hidden">
+                    <div class="spinner"></div>
+                    <span>Dosyalar işleniyor...</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="search-section disabled" id="search-section">
+            <div class="card search-card">
+                <h2>2. Arama Yap</h2>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Bir kelime veya cümle yazın... (Örn: Pumpkin)" autocomplete="off">
+                    <button id="search-btn" class="btn primary">Ara</button>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="results-header">
+                    <h3>Sonuçlar</h3>
+                    <span id="result-count"></span>
+                </div>
+                <div id="results-list" class="results-list">
+                    <!-- Results will be injected here -->
+                    <div class="empty-state">
+                        Henüz arama yapılmadı.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
